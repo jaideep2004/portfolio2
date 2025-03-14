@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import theme from "./theme";
-import "@fontsource/rajdhani/300.css";
-import "@fontsource/rajdhani/400.css";
-import "@fontsource/rajdhani/500.css";
-import "@fontsource/rajdhani/600.css";
-import "@fontsource/rajdhani/700.css";
 import "./App.css";
 import About from "./components/about/About";
 import Footer from "./components/footer/Footer";

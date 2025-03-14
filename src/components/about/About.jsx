@@ -177,7 +177,7 @@ const About = () => {
 									color='primary'
 									size='large'
 									startIcon={<FaDownload />}
-									href='/resume.pdf'
+									href='https://drive.google.com/file/d/11-bERt3BYS6r3aAfdq0ZrLN4DW_SM9Hf/view?usp=sharing'
 									target='_blank'
 									sx={{
 										borderRadius: "8px",
