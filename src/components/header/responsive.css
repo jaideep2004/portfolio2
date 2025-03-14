@@ -1,0 +1,142 @@
+@media only screen and (max-width: 768px) {
+	html {
+		scroll-snap-type: none;
+		scroll-behavior: smooth;
+		margin: 0;
+		padding: 0;
+		user-select: none;
+		-webkit-user-select: none; /* Safari */
+		-moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* Internet Explorer/Edge */
+		-o-user-select: none; /* Opera */
+	}
+	body {
+		scroll-behavior: smooth;
+		user-select: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		-o-user-select: none;
+	}
+	.bg {
+		width: 100vh;
+		height: 100vh;
+	}
+
+	/* header */
+
+	.three {
+		visibility: visible;
+	}
+
+	.mlogo {
+		/* border: 1px solid white; */
+		visibility: visible;
+	}
+
+	/* main */
+	.firstcontain {
+		/* margin-left: -110px; */
+		border: 1px solid white;
+	}
+	#hero {
+		margin-top: 65px;
+		margin-left: -58px;
+		/* margin-left: -100px; */
+	}
+
+	.mainwrap {
+		flex-direction: column;
+	}
+	.name {
+		flex-wrap: wrap;
+		text-align: center;
+	}
+	.name > div:nth-child(1) {
+		scale: 0.76;
+	}
+	.cscreen {
+		margin-top: -55px;
+		scale: 0.85;
+	}
+	.mainarrow {
+		margin-top: -50px;
+	}
+
+	/* about */
+
+	.aboutwrap {
+		margin-top: 700px;
+		flex-direction: column;
+		margin-left: 0px;
+	}
+
+	.abouttext {
+		margin: 0px 15px;
+		width: fit-content;
+		backdrop-filter: blur(0px);
+		background-color: #333;
+	}
+
+	/* skills */
+
+	.skillsmain {
+		margin-top: 1165px;
+		margin-left: -97px !important;
+		margin-right: -57px !important;
+		h1 {
+			margin-left: 0px !important;
+			margin-right: -40px !important;
+		}
+	}
+	
+	.skillscontainer > h2 {
+		display: none;
+	}
+
+	/* projects */
+
+	#project {
+		margin-top: 385px;
+	}
+
+	.slider-container {
+		margin-top: 90px !important;
+		scale: 2.4 ;
+		
+	}
+	.slider-container:hover{
+		transform: none;
+	}
+	.slidedesc {
+		transform: scale(0.4);
+	}
+
+	.mobilebtncontain {
+		/* visibility: visible !important; */
+		display: flex !important;
+		margin-top: 90px;
+		gap: 20px;
+		align-items: center;
+		justify-content: center;
+	}
+	.slider-button {
+		display: none;
+	}
+
+	/* contact */
+	.maincontact {
+		margin-top: 30px;
+	}
+
+	.contactwrap {
+		flex-direction: column;
+	}
+	.contactform {
+		/* margin-left: -25px !important; */
+		scale: 0.85;
+	}
+	.contact2 {
+		margin-top: -40px;
+	}
+}
