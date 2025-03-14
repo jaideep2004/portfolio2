@@ -15,9 +15,8 @@ const LoadingScreen = () => {
 			style={{ backgroundImage: 'url("./images/bg11.jpg")' }}>
 			<div className='ringcontain' data-aos='zoom-in'>
 				<div className='ringN'>
-					<div className='ring2' >
-						<div >J</div>
-						
+					<div className='ring2'>
+						<div>J</div>
 					</div>
 				</div>
 				<div className='ringA'>
@@ -33,7 +32,6 @@ const LoadingScreen = () => {
 					<div className='ring1'></div>
 				</div>
 			</div>
-			
 		</div>
 	);
 };
