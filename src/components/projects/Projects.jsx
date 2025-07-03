@@ -28,6 +28,75 @@ import LockIcon from "@mui/icons-material/Lock";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
+// Simple Background Component for Slider
+const SliderBackground = () => {
+	return (
+		<Box
+			sx={{
+				position: "absolute",
+				top: 0,
+				left: 0,
+				right: 0,
+				bottom: 0,
+				borderRadius: "20px",
+				overflow: "hidden",
+				zIndex: -1,
+				opacity: 0.8,
+			}}>
+			{/* Gradient Background */}
+			<Box
+				sx={{
+					position: "absolute",
+					top: 0,
+					left: 0,
+					right: 0,
+					bottom: 0,
+					background: "linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%)",
+				}}
+			/>
+			
+			{/* Grid Lines */}
+			<Box
+				sx={{
+					position: "absolute",
+					top: 0,
+					left: 0,
+					right: 0,
+					bottom: 0,
+					backgroundImage:
+						"linear-gradient(rgba(0, 188, 212, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 188, 212, 0.05) 1px, transparent 1px)",
+					backgroundSize: "30px 30px",
+					opacity: 0.3,
+				}}
+			/>
+			
+			{/* Glow Effect */}
+			<Box
+				component={motion.div}
+				animate={{
+					opacity: [0.4, 0.6, 0.4],
+				}}
+				transition={{
+					duration: 3,
+					repeat: Infinity,
+					ease: "easeInOut",
+				}}
+				sx={{
+					position: "absolute",
+					top: "50%",
+					left: "50%",
+					width: "80%",
+					height: "60%",
+					borderRadius: "50%",
+					background: "radial-gradient(circle, rgba(0, 188, 212, 0.15) 0%, transparent 70%)",
+					transform: "translate(-50%, -50%)",
+					filter: "blur(40px)",
+				}}
+			/>
+		</Box>
+	);
+};
+
 // Futuristic Carousel Component
 const FuturisticCarousel = ({ slides }) => {
 	const [active, setActive] = useState(0);
@@ -53,338 +122,279 @@ const FuturisticCarousel = ({ slides }) => {
 		return () => clearInterval(interval);
 	}, [isPaused]);
 
+	// Calculate indices for visible cards (center, left, right)
+	const getVisibleIndices = () => {
+		const centerIndex = active;
+		const leftIndex = (active - 1 + totalSlides) % totalSlides;
+		const rightIndex = (active + 1) % totalSlides;
+		return { centerIndex, leftIndex, rightIndex };
+	};
+
+	const { centerIndex, leftIndex, rightIndex } = getVisibleIndices();
+
+	// Function to determine card position
+	const getCardPosition = (index) => {
+		if (index === centerIndex) return "center";
+		if (index === leftIndex) return "left";
+		if (index === rightIndex) return "right";
+		return "hidden";
+	};
+
 	return (
 		<Box
 			sx={{
 				position: "relative",
 				width: "100%",
-				height: { xs: "500px", md: "600px" },
+				height: { xs: "500px", md: "520px" },
+				marginBottom: "80px",
+				perspective: "1500px",
+				borderRadius: "20px",
 			}}
 			onMouseEnter={() => setIsPaused(true)}
 			onMouseLeave={() => setIsPaused(false)}>
+			
+			{/* Background */}
+			<SliderBackground />
+			
 			{/* Main Display */}
 			<Box
 				sx={{
 					width: "100%",
 					height: "100%",
-					borderRadius: "12px",
-					overflow: "hidden",
-					background:
-						"linear-gradient(145deg, rgba(0,0,0,0.8) 0%, rgba(18,18,18,0.9) 100%)",
-					boxShadow: "0 8px 32px 0 rgba(0, 188, 212, 0.3)",
-					border: "1px solid rgba(255, 255, 255, 0.1)",
 					position: "relative",
 					display: "flex",
 					justifyContent: "center",
 					alignItems: "center",
+					transformStyle: "preserve-3d",
 				}}>
-				{/* Background Grid */}
-				<Box
-					sx={{
-						position: "absolute",
-						top: 0,
-						left: 0,
-						width: "100%",
-						height: "100%",
-						backgroundImage:
-							"linear-gradient(rgba(0, 188, 212, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 188, 212, 0.05) 1px, transparent 1px)",
-						backgroundSize: "20px 20px",
-						opacity: 0.5,
-					}}
-				/>
-
-				{/* Animated Glow Effect */}
-				<Box
-					component={motion.div}
-					animate={{
-						boxShadow: [
-							"0 0 20px rgba(0, 188, 212, 0.3)",
-							"0 0 40px rgba(0, 188, 212, 0.2)",
-							"0 0 20px rgba(0, 188, 212, 0.3)",
-						],
-					}}
-					transition={{
-						duration: 3,
-						repeat: Infinity,
-						ease: "easeInOut",
-					}}
-					sx={{
-						position: "absolute",
-						top: "50%",
-						left: "50%",
-						width: "80%",
-						height: "80%",
-						borderRadius: "12px",
-						transform: "translate(-50%, -50%)",
-						zIndex: 0,
-					}}
-				/>
-
 				{/* Carousel Items */}
 				<Box
-					sx={{ width: "80%", height: "80%", position: "relative", zIndex: 1 }}>
-					{slides.map((slide, index) => (
-						<motion.div
-							key={index}
-							initial={{ opacity: 0, scale: 0.8, rotateY: 90 }}
-							animate={{
-								opacity: index === active ? 1 : 0,
-								scale: index === active ? 1 : 0.8,
-								rotateY: index === active ? 0 : 90,
-								x: index === active ? 0 : index < active ? -100 : 100,
-							}}
-							transition={{ duration: 0.5 }}
-							style={{
-								position: "absolute",
-								top: 0,
-								left: 0,
-								width: "100%",
-								height: "100%",
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								justifyContent: "center",
-								padding: "20px",
-							}}>
-							<Card
+					sx={{ 
+						width: "100%", 
+						height: "100%", 
+						position: "relative",
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+					}}>
+					{slides.map((slide, index) => {
+						const position = getCardPosition(index);
+						
+						// Define transformations based on position
+						let transform = "scale(0)";
+						let zIndex = 0;
+						let opacity = 0;
+						
+						switch (position) {
+							case "center":
+								transform = "translateX(0) translateZ(0) rotateY(0)";
+								zIndex = 3;
+								opacity = 1;
+								break;
+							case "left":
+								transform = "translateX(-75%) translateZ(-150px) rotateY(25deg)";
+								zIndex = 2;
+								opacity = 0.7;
+								break;
+							case "right":
+								transform = "translateX(75%) translateZ(-150px) rotateY(-25deg)";
+								zIndex = 2;
+								opacity = 0.7;
+								break;
+							default:
+								transform = "scale(0)";
+								zIndex = 0;
+								opacity = 0;
+						}
+						
+						return (
+							<Box
+								key={index}
+								component={motion.div}
+								initial={{ opacity: 0 }}
+								animate={{ 
+									opacity,
+									transform,
+									filter: position !== "center" ? "brightness(0.7)" : "brightness(1)"
+								}}
+								transition={{ 
+									duration: 0.6,
+									ease: "easeOut"
+								}}
+								onClick={() => position !== "center" && setActive(index)}
 								sx={{
-									height: "100%",
-									display: "flex",
-									flexDirection: "column",
-									background: "rgba(30,30,30,0.8)",
-									border: "1px solid rgba(255, 255, 255, 0.05)",
-									borderRadius: "16px",
-									overflow: "hidden",
-									transition: "all 0.3s ease",
-									position: "relative",
-									"&:hover": {
-										boxShadow: "0 10px 25px rgba(0, 188, 212, 0.3)",
-										transform: "translateY(-8px)",
-										"& .MuiCardMedia-root": {
-											transform: "scale(1.05)",
-										},
-									},
-									"&::before": {
-										content: '""',
-										position: "absolute",
-										top: 0,
-										left: 0,
-										right: 0,
-										bottom: 0,
-										background: "linear-gradient(180deg, rgba(0,188,212,0) 0%, rgba(0,188,212,0.1) 100%)",
-										opacity: 0,
-										transition: "opacity 0.3s ease",
-										zIndex: 1,
-									},
-									"&:hover::before": {
-										opacity: 1,
-									},
-									"@media (min-width: 900px)": {
-										width: "100%",
-										maxWidth: "600px",
-										backgroundColor: "rgba(18, 18, 18, 0.7)",
-										backdropFilter: "blur(10px)",
-										border: "1px solid rgba(255, 255, 255, 0.1)",
-										transform: "translateZ(0)",
-										willChange: "transform",
-										"&:hover": {
-											boxShadow: "0 0 40px rgba(0, 188, 212, 0.4)",
-											transform: "translateY(-8px) translateZ(0)",
-										},
-									}
+									position: "absolute",
+									width: { xs: "90%", sm: "80%", md: "40%" },
+									height: { xs: "80%", md: "85%" },
+									cursor: position !== "center" ? "pointer" : "default",
+									zIndex,
+									transformOrigin: "center center",
+									transformStyle: "preserve-3d",
+									transition: "all 0.5s ease",
 								}}>
-								<CardMedia
-									component='img'
-									height='200'
-									image={slide.image}
-									alt={slide.title}
+								<Card
 									sx={{
-										transition: "transform 0.3s ease",
-										"&::after": {
+										height: "100%",
+										display: "flex",
+										flexDirection: "column",
+										background: "rgba(30,30,30,0.8)",
+										border: "1px solid rgba(255, 255, 255, 0.1)",
+										borderRadius: "16px",
+										overflow: "hidden",
+										transition: "all 0.3s ease",
+										position: "relative",
+										boxShadow: position === "center" 
+											? "0 15px 35px rgba(0, 188, 212, 0.4)" 
+											: "0 10px 25px rgba(0, 0, 0, 0.5)",
+										"&:hover": position === "center" && {
+											boxShadow: "0 20px 40px rgba(0, 188, 212, 0.5)",
+										},
+										"&::before": {
 											content: '""',
 											position: "absolute",
 											top: 0,
 											left: 0,
 											right: 0,
 											bottom: 0,
-											background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)",
+											background: "linear-gradient(180deg, rgba(0,188,212,0) 0%, rgba(0,188,212,0.1) 100%)",
 											opacity: 0,
 											transition: "opacity 0.3s ease",
+											zIndex: 1,
 										},
-										"&:hover::after": {
+										"&:hover::before": {
 											opacity: 1,
 										},
-										"@media (min-width: 900px)": {
-											objectFit: "contain",
-											filter: "brightness(0.9)",
-											"&:hover": {
-												filter: "brightness(1.1)",
-												transform: "scale(1.03)",
-											},
-										}
-									}}
-								/>
-								<CardContent
-									sx={{
-										flexGrow: 1,
-										display: "flex",
-										flexDirection: "column",
-										p: { xs: 2, md: 3 },
-										overflow: "auto",
-										"&::-webkit-scrollbar": {
-											width: "4px",
-										},
-										"&::-webkit-scrollbar-track": {
-											background: "rgba(255,255,255,0.1)",
-											borderRadius: "2px",
-										},
-										"&::-webkit-scrollbar-thumb": {
-											background: "#00bcd4",
-											borderRadius: "2px",
-										},
-										"@media (min-width: 900px)": {
-											position: "relative",
-											zIndex: 1,
+									}}>
+									<CardMedia
+										component='img'
+										height={{ xs: "180", md: "200" }}
+										image={slide.image}
+										alt={slide.title}
+										sx={{
+											transition: "transform 0.3s ease",
+											objectFit: "cover",
+											filter: position !== "center" ? "brightness(0.8)" : "brightness(1)",
+										}}
+									/>
+									<CardContent
+										sx={{
+											flexGrow: 1,
+											display: "flex",
+											flexDirection: "column",
+											p: { xs: 2, md: 2.5 },
+											overflow: "auto",
 											"&::-webkit-scrollbar": {
-												width: "6px",
+												width: "4px",
 											},
 											"&::-webkit-scrollbar-track": {
-												background: "rgba(255, 255, 255, 0.1)",
-												borderRadius: "3px",
+												background: "rgba(255,255,255,0.1)",
+												borderRadius: "2px",
 											},
 											"&::-webkit-scrollbar-thumb": {
-												background: "rgba(0, 188, 212, 0.5)",
-												borderRadius: "3px",
-												"&:hover": {
-													background: "rgba(0, 188, 212, 0.7)",
-												},
+												background: "#00bcd4",
+												borderRadius: "2px",
 											},
-										}
-									}}>
-									<Typography
-										variant='h5'
-										component='h3'
-										sx={{
-											fontFamily: "'Poppins', sans-serif",
-											fontWeight: 600,
-											fontSize: { xs: "1.2rem", md: "1.5rem" },
-											color: "white",
-											mb: 1,
-											textShadow: "0 2px 4px rgba(0,0,0,0.3)",
-											"@media (min-width: 900px)": {
-												color: "#00bcd4",
-												fontSize: "1.8rem",
-												textShadow: "0 0 10px rgba(0, 188, 212, 0.3)",
-											}
 										}}>
-										{slide.title}
-									</Typography>
-									<Typography
-										variant='body2'
-										sx={{
-											fontFamily: "'Poppins', sans-serif",
-											fontSize: { xs: "0.85rem", md: "1rem" },
-											color: "rgba(255,255,255,0.8)",
-											mb: 2,
-											lineHeight: 1.6,
-											"@media (min-width: 900px)": {
-												color: "text.secondary",
-												fontSize: "1rem",
-											}
-										}}>
-										{slide.description}
-									</Typography>
-									{slide.technologies && slide.technologies.length > 0 && (
-										<Box
+										<Typography
+											variant='h5'
+											component='h3'
 											sx={{
-												display: "flex",
-												flexWrap: "wrap",
-												gap: 1,
-												mb: 2,
+												fontFamily: "'Poppins', sans-serif",
+												fontWeight: 600,
+												fontSize: { xs: "1.2rem", md: "1.5rem" },
+												color: position === "center" ? "#00bcd4" : "white",
+												mb: 1,
+												textShadow: "0 2px 4px rgba(0,0,0,0.3)",
 											}}>
-											{slide.technologies.map((tech, index) => (
-												<Chip
-													key={index}
-													label={tech}
-													size="small"
-													sx={{
-														backgroundColor: "rgba(0, 188, 212, 0.1)",
-														color: "#00bcd4",
-														fontFamily: "'Poppins', sans-serif",
-														fontSize: { xs: "0.7rem", md: "0.75rem" },
-														"&:hover": {
-															backgroundColor: "rgba(0, 188, 212, 0.2)",
-														},
-													}}
-												/>
-											))}
-										</Box>
+											{slide.title}
+										</Typography>
+										<Typography
+											variant='body2'
+											sx={{
+												fontFamily: "'Poppins', sans-serif",
+												fontSize: { xs: "0.85rem", md: "1rem" },
+												color: "rgba(255,255,255,0.8)",
+												mb: 2,
+												lineHeight: 1.6,
+											}}>
+											{slide.description}
+										</Typography>
+										{slide.technologies && slide.technologies.length > 0 && (
+											<Box
+												sx={{
+													display: "flex",
+													flexWrap: "wrap",
+													gap: 1,
+													mb: 2,
+												}}>
+												{slide.technologies.map((tech, idx) => (
+													<Chip
+														key={idx}
+														label={tech}
+														size="small"
+														sx={{
+															backgroundColor: "rgba(0, 188, 212, 0.1)",
+															color: "#00bcd4",
+															fontFamily: "'Poppins', sans-serif",
+															fontSize: { xs: "0.7rem", md: "0.75rem" },
+															"&:hover": {
+																backgroundColor: "rgba(0, 188, 212, 0.2)",
+															},
+														}}
+													/>
+												))}
+											</Box>
+										)}
+									</CardContent>
+									{position === "center" && (
+										<CardActions
+											sx={{
+												p: { xs: 1.5, md: 2 },
+												background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)",
+												display: "flex",
+												justifyContent: "center",
+											}}>
+											<Button
+												href={slide.link}
+												target='_blank'
+												rel='noopener noreferrer'
+												variant='contained'
+												sx={{
+													background: "linear-gradient(45deg, #00bcd4, #00e5ff)",
+													color: "white",
+													fontFamily: "'Poppins', sans-serif",
+													fontSize: { xs: "0.8rem", md: "0.875rem" },
+													textTransform: "none",
+													px: { xs: 2, md: 3 },
+													py: { xs: 0.5, md: 0.75 },
+													position: "relative",
+													overflow: "hidden",
+													"&::before": {
+														content: '""',
+														position: "absolute",
+														top: 0,
+														left: "-100%",
+														width: "100%",
+														height: "100%",
+														background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+														transition: "0.5s",
+													},
+													"&:hover::before": {
+														left: "100%",
+													},
+													"&:hover": {
+														transform: "translateY(-2px)",
+														boxShadow: "0 5px 15px rgba(0, 188, 212, 0.4)",
+													},
+												}}>
+												View Project
+											</Button>
+										</CardActions>
 									)}
-								</CardContent>
-								<CardActions
-									sx={{
-										p: { xs: 1.5, md: 2 },
-										background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)",
-										display: "flex",
-										justifyContent: "flex-end",
-										"@media (min-width: 900px)": {
-											justifyContent: "center",
-											pb: 2,
-											pt: 0,
-											background: "linear-gradient(to bottom, transparent, rgba(18, 18, 18, 0.9))",
-											position: "relative",
-											zIndex: 2,
-										}
-									}}>
-									<Button
-										href={slide.link}
-										target='_blank'
-										rel='noopener noreferrer'
-										variant='contained'
-										sx={{
-											background: "linear-gradient(45deg, #00bcd4, #00e5ff)",
-											color: "white",
-											fontFamily: "'Poppins', sans-serif",
-											fontSize: { xs: "0.8rem", md: "0.875rem" },
-											textTransform: "none",
-											px: { xs: 2, md: 3 },
-											py: { xs: 0.5, md: 0.75 },
-											position: "relative",
-											overflow: "hidden",
-											"&::before": {
-												content: '""',
-												position: "absolute",
-												top: 0,
-												left: "-100%",
-												width: "100%",
-												height: "100%",
-												background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-												transition: "0.5s",
-											},
-											"&:hover::before": {
-												left: "100%",
-											},
-											"&:hover": {
-												transform: "translateY(-2px)",
-												boxShadow: "0 5px 15px rgba(0, 188, 212, 0.4)",
-											},
-											"@media (min-width: 900px)": {
-												borderRadius: "8px",
-												px: 3,
-												background: "linear-gradient(90deg, #00bcd4, #7c4dff)",
-												transition: "all 0.3s ease",
-												"&:hover": {
-													transform: "translateY(-3px)",
-													boxShadow: "0 10px 20px rgba(0, 188, 212, 0.3)",
-												},
-											}
-										}}>
-										View Project
-									</Button>
-								</CardActions>
-							</Card>
-						</motion.div>
-					))}
+								</Card>
+							</Box>
+						);
+					})}
 				</Box>
 			</Box>
 
@@ -392,21 +402,24 @@ const FuturisticCarousel = ({ slides }) => {
 			<Box
 				sx={{
 					position: "absolute",
-					bottom: 5,
+					bottom: -60,
 					left: 0,
 					right: 0,
 					display: "flex",
 					justifyContent: "center",
-					gap: 2,
+					gap: 5,
 				}}>
 				<IconButton
 					onClick={prevSlide}
 					sx={{
-						backgroundColor: "rgba(0, 0, 0, 0.5)",
+						backgroundColor: "rgba(0, 0, 0, 0.6)",
 						color: "#00bcd4",
+						width: "45px",
+						height: "45px",
 						"&:hover": {
-							backgroundColor: "rgba(0, 0, 0, 0.7)",
+							backgroundColor: "rgba(0, 0, 0, 0.8)",
 							transform: "scale(1.1)",
+							boxShadow: "0 0 15px rgba(0, 188, 212, 0.5)",
 						},
 						transition: "all 0.3s ease",
 					}}>
@@ -415,49 +428,19 @@ const FuturisticCarousel = ({ slides }) => {
 				<IconButton
 					onClick={nextSlide}
 					sx={{
-						backgroundColor: "rgba(0, 0, 0, 0.5)",
+						backgroundColor: "rgba(0, 0, 0, 0.6)",
 						color: "#00bcd4",
+						width: "45px",
+						height: "45px",
 						"&:hover": {
-							backgroundColor: "rgba(0, 0, 0, 0.7)",
+							backgroundColor: "rgba(0, 0, 0, 0.8)",
 							transform: "scale(1.1)",
+							boxShadow: "0 0 15px rgba(0, 188, 212, 0.5)",
 						},
 						transition: "all 0.3s ease",
 					}}>
 					<ArrowForwardIosIcon />
 				</IconButton>
-			</Box>
-
-			{/* Pagination Indicators */}
-			<Box
-				sx={{
-					position: "absolute",
-					bottom: 60,
-					left: 0,
-					right: 0,
-					display: "flex",
-					justifyContent: "center",
-					gap: 1,
-				}}>
-				{slides.map((_, index) => (
-					<Box
-						key={`indicator-${index}`}
-						onClick={() => setActive(index)}
-						sx={{
-							width: 8,
-							height: 8,
-							borderRadius: "50%",
-							backgroundColor:
-								index === active ? "#00bcd4" : "rgba(255, 255, 255, 0.3)",
-							cursor: "pointer",
-							transition: "all 0.3s ease",
-							"&:hover": {
-								backgroundColor:
-									index === active ? "#00bcd4" : "rgba(255, 255, 255, 0.5)",
-								transform: "scale(1.2)",
-							},
-						}}
-					/>
-				))}
 			</Box>
 		</Box>
 	);
@@ -616,50 +599,88 @@ const Projects = () => {
 	});
 	const [projects, setProjects] = useState([
 		{
-			title: "NGO Website",
-			description:
-				"NGO Website built using Wordpress and using plugins like WPForms Lite",
+			title: "The FinShelter",
+			description: "Tax filing platform built with MERN stack and backend record management.",
 			image: "./images/pr1.png",
-			link: "https://ggsvidyakendra.com/",
+			link: "https://thefinshelter.com/",
+			
 		},
 		{
-			title: "NGO Website 2",
-			description:
-				"NGO Website built using React JS and integrating libraries like EmailJS and Razorpay payment gateway",
-			image: "./images/pr2.png",
+			title: "TrueSub",
+			description: "E-commerce website with custom WordPress coding and multilingual support.",
+			image: "./images/pr2.png", 
+			link: "https://karhari.sprintbus.ca/",
+			
+		},
+		{
+			title: "SingleAudio",
+			description: "Fully custom WordPress music site with artist uploads and copyright tools.",
+			image: "./images/pr3.png",
+			link: "https://singleaudio.com/",
+			
+		},
+		{
+			title: "Karhari Media",
+			description: "Custom WordPress music platform with dynamic releases and audio player.",
+			image: "./images/pr4.png",
+			link: "https://karharimedia.com/",
+			
+		},
+		{
+			title: "Inlighntech",
+			description: "Course and certification site with WooCommerce and training enrollment.",
+			image: "./images/pr5.png",
+			link: "https://www.inlighntech.com/",
+			
+		},
+		{
+			title: "Acumen",
+			description: "Analytics company website with custom WordPress plugin and forms.",
+			image: "./images/pr6.png",
+			link: "https://acumendata.io/",
+			
+		},
+		{
+			title: "Life Foundation NGO",
+			description: "Donation platform using React with Razorpay and PayPal integration.",
+			image: "./images/pr7.png",
 			link: "https://lifefoundationhelp.com/",
-		}, 
+			
+		},
+		{
+			title: "AcademicAssignmentMaster",
+			description: "MERN-based education site with dashboards and Razorpay payments.",
+			image: "./images/pr8.png",
+			link: "https://academicassignmentmaster.co.in/",
+			
+		},
+		{
+			title: "NGO Website",
+			description: "NGO Website built using WordPress and using plugins like WPForms Lite.",
+			image: "./images/pr1.png",
+			link: "https://ggsvidyakendra.com/",
+			
+		},
 		{
 			title: "Nutritionist Website",
-			description: "Nutritionist Website built using MERN stack",
+			description: "Nutritionist Website built using MERN stack with appointment booking.",
 			image: "./images/pr3.png",
 			link: "https://arvindsabharwal.onrender.com/",
+			
 		},
 		{
 			title: "Education Website",
-			description: "Education Website built using MERN stack",
+			description: "Education Website built using MERN stack with course management.",
 			image: "./images/pr4.png",
 			link: "https://codingarena.onrender.com/",
+			
 		},
 		{
 			title: "Trucking Website",
-			description:
-				"Trucking Website built using Wordpress and plugins like WPForms Lite",
+			description: "Trucking Website built using WordPress and plugins like WPForms Lite.",
 			image: "./images/pr5.png",
 			link: "https://gunaventerprises.com/",
-		},
-		{
-			title: "Taxation Website",
-			description: "Taxation Website built using MERN Stack",
-			image: "./images/pr7.png",
-			link: "https://frontend-taxharbor.thetaxharbor.com/",
-		},
-		{
-			title: "Education Website",
-			description:
-				"Education Website built using MERN Stack with integration of Razorpay",
-			image: "./images/pr8.png",
-			link: "https://academicassignmentmaster.co.in/",
+			
 		},
 	]);
 

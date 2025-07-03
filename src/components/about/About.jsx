@@ -60,7 +60,7 @@ const About = () => {
 									border: "2px solid rgba(0, 188, 212, 0.5)",
 								}}>
 								<img
-									src='./images/b3.jpg'
+									src='./images/profile2.jpg'
 									alt='Profile'
 									style={{
 										width: "100%",
