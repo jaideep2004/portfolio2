@@ -240,7 +240,7 @@ const FuturisticCarousel = ({ slides }) => {
 										background: "rgba(30,30,30,0.8)",
 										border: "1px solid rgba(255, 255, 255, 0.1)",
 										borderRadius: "16px",
-										overflow: "hidden",
+										// overflow: position === "center" ? "visible" : "hidden",
 										transition: "all 0.3s ease",
 										position: "relative",
 										boxShadow: position === "center" 
@@ -353,6 +353,8 @@ const FuturisticCarousel = ({ slides }) => {
 												background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)",
 												display: "flex",
 												justifyContent: "center",
+												position: "relative",
+												zIndex: 10,
 											}}>
 											<Button
 												href={slide.link}
@@ -368,6 +370,7 @@ const FuturisticCarousel = ({ slides }) => {
 													px: { xs: 2, md: 3 },
 													py: { xs: 0.5, md: 0.75 },
 													position: "relative",
+													zIndex: 11,
 													overflow: "hidden",
 													"&::before": {
 														content: '""',
@@ -657,28 +660,28 @@ const Projects = () => {
 		{
 			title: "NGO Website",
 			description: "NGO Website built using WordPress and using plugins like WPForms Lite.",
-			image: "./images/pr1.png",
+			image: "./images/pr9.png",
 			link: "https://ggsvidyakendra.com/",
 			
 		},
 		{
 			title: "Nutritionist Website",
 			description: "Nutritionist Website built using MERN stack with appointment booking.",
-			image: "./images/pr3.png",
+			image: "./images/pr10.png",
 			link: "https://arvindsabharwal.onrender.com/",
 			
 		},
 		{
 			title: "Education Website",
 			description: "Education Website built using MERN stack with course management.",
-			image: "./images/pr4.png",
+			image: "./images/pr11.png",
 			link: "https://codingarena.onrender.com/",
 			
 		},
 		{
 			title: "Trucking Website",
 			description: "Trucking Website built using WordPress and plugins like WPForms Lite.",
-			image: "./images/pr5.png",
+			image: "./images/pr12.png",
 			link: "https://gunaventerprises.com/",
 			
 		},
