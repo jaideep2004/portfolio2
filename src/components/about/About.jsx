@@ -161,7 +161,7 @@ const About = () => {
 									fontSize: { xs: "1rem", md: "1.1rem" },
 									lineHeight: 1.8,
 								}}>
-								Currently pursuing my final year in B.Voc. Software Development,
+								Having completed my B.Voc. Software Development,
 								I combine academic knowledge with practical skills to build
 								responsive and intuitive web applications. My expertise includes
 								React.js, JavaScript, and various modern development tools.

@@ -237,7 +237,7 @@ const Main = () => {
 											fontFamily: "'Poppins', sans-serif",
 											fontSize: { xs: "1.1rem", sm: "1.3rem", md: "1.4rem" },
 										}}>
-										Student / Web Developer
+										Full Stack Web Developer
 									</Typography>
 									<Box
 										component={motion.div}
