@@ -128,7 +128,7 @@ const About = () => {
 								}}>
 								Jaideep Singh
 							</Typography>
-							<Typography
+{/* 							<Typography
 								variant='h6'
 								sx={{
 									mb: 4,
@@ -137,7 +137,7 @@ const About = () => {
 									fontSize: { xs: "1.1rem", md: "1.2rem" },
 								}}>
 								Final Year Student in B.Voc. Software Development
-							</Typography>
+							</Typography> */}
 							<Typography
 								variant='body1'
 								sx={{
