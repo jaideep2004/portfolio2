@@ -177,7 +177,7 @@ const About = () => {
 									color='primary'
 									size='large'
 									startIcon={<FaDownload />}
-									href='https://drive.google.com/file/d/11-bERt3BYS6r3aAfdq0ZrLN4DW_SM9Hf/view?usp=sharing'
+									href='https://drive.google.com/file/d/1lpuaAhjdIvXCWuV8CMNB9RoWbCvbSM4V/view?usp=sharing'
 									target='_blank'
 									sx={{
 										borderRadius: "8px",
